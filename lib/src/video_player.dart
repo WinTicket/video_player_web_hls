@@ -170,7 +170,11 @@ class VideoPlayer {
       setBuffering(false);
       _eventController.add(VideoEvent(eventType: VideoEventType.completed));
     });
+
+    document.body?.append(_videoElement);
   }
+
+  MediaStream captureMediaStream() => _videoElement.captureStream();
 
   /// Attempts to play the video.
   ///
@@ -261,6 +265,7 @@ class VideoPlayer {
   void dispose() {
     _videoElement.removeAttribute('src');
     _videoElement.load();
+    _videoElement.remove();
     _hls?.stopLoad();
   }
 
