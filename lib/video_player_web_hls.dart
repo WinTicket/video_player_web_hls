@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 
+import 'src/html_video_player_view.dart';
 import 'src/shims/dart_ui.dart' as ui;
 import 'src/video_player.dart';
 
@@ -80,14 +81,13 @@ class VideoPlayerPluginHls extends VideoPlayerPlatform {
     final VideoElement videoElement = VideoElement()
       ..id = 'videoElement-$textureId'
       ..style.border = 'none'
-      ..style.height = '100%'
-      ..style.width = '100%';
+      ..style.height = '0px'
+      ..style.width = '0px'
+      ..style.display = 'none';
 
     videoElement.attributes['playsinline'] = 'true';
 
-    // TODO(hterkelsen): Use initialization parameters once they are available
-    ui.platformViewRegistry.registerViewFactory(
-        'videoPlayer-$textureId', (int viewId) => videoElement);
+    document.body?.append(videoElement);
 
     final VideoPlayer player = VideoPlayer(
         videoElement: videoElement,
@@ -137,6 +137,11 @@ class VideoPlayerPluginHls extends VideoPlayerPlatform {
   }
 
   @override
+  Future<Duration> getDuration(int textureId) async {
+    return _player(textureId).getDuration();
+  }
+
+  @override
   Stream<VideoEvent> videoEventsFor(int textureId) {
     return _player(textureId).events;
   }
@@ -149,7 +154,9 @@ class VideoPlayerPluginHls extends VideoPlayerPlatform {
 
   @override
   Widget buildView(int textureId) {
-    return HtmlElementView(viewType: 'videoPlayer-$textureId');
+    return HtmlVideoPlayerView(
+      videoPlayer: _player(textureId),
+    );
   }
 
   /// Sets the audio mode to mix with other sources (ignored)
