@@ -85,6 +85,8 @@ class VideoPlayerPluginHls extends VideoPlayerPlatform {
       ..style.width = '0px'
       ..style.display = 'none';
 
+    videoElement.attributes['playsinline'] = 'true';
+
     document.body?.append(videoElement);
 
     final VideoPlayer player = VideoPlayer(

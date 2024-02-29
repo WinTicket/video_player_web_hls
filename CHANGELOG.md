@@ -1,3 +1,11 @@
+## 1.1.1
+* Fixed video buffering crashing on slow networks (#53)
+## 1.1.0
+* Updated http dependency
+## 1.0.0+3
+* Fix video_player_platform_interface version
+## 1.0.0+2
+* Added inline attribute to video player
 ## 1.0.0+1
 * Fixed correct data not passed in video player events
 ## 1.0.0
