@@ -176,6 +176,8 @@ class VideoPlayer {
     });
   }
 
+  MediaStream captureMediaStream() => _videoElement.captureStream();
+
   /// Attempts to play the video.
   ///
   /// If this method is called programmatically (without user interaction), it
@@ -254,6 +256,11 @@ class VideoPlayer {
   Duration getPosition() {
     _sendBufferingRangesUpdate();
     return Duration(milliseconds: (_videoElement.currentTime * 1000).round());
+  }
+
+  Duration getDuration() {
+    _sendBufferingRangesUpdate();
+    return Duration(milliseconds: (_videoElement.duration * 1000).round());
   }
 
   /// Disposes of the current [html.VideoElement].
