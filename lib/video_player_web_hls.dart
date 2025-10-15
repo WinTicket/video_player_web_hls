@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:ui_web' as ui_web;
+
 import 'src/html_video_player_view.dart';
 import 'src/shims/dart_ui.dart' as ui;
 import 'src/video_player.dart';
@@ -67,7 +70,7 @@ class VideoPlayerPluginHls extends VideoPlayerPlatform {
         if (dataSource.package != null && dataSource.package!.isNotEmpty) {
           assetUrl = 'packages/${dataSource.package}/$assetUrl';
         }
-        assetUrl = ui.webOnlyAssetManager.getAssetUrl(assetUrl);
+        assetUrl = ui_web.assetManager.getAssetUrl(assetUrl);
         uri = assetUrl;
         break;
       case DataSourceType.file:
